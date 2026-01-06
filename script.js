@@ -1,22 +1,17 @@
-// script.js — Calculator logic (vanilla JS, no eval)
-// Clear separation between UI updates and evaluation logic
-
 document.addEventListener('DOMContentLoaded', () => {
   const previousEl = document.getElementById('previous');
   const currentEl = document.getElementById('current');
 
-  let previous = ''; // previous operand (string)
-  let current = '0'; // current operand (string)
-  let operator = null; // current operator (one of + − × ÷)
-  let error = false; // error state (e.g., division by zero)
+  let previous = '';
+  let current = '0';
+  let operator = null;
+  let error = false; 
 
-  // Utility: update the on-screen display
   function updateDisplay() {
     previousEl.textContent = previous ? `${previous} ${operator ?? ''}`.trim() : '';
     currentEl.textContent = current;
   }
 
-  // Reset everything
   function allClear() {
     previous = '';
     current = '0';
@@ -25,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
   }
 
-  // Delete last char from current input
   function deleteChar() {
     if (error) return;
     if (current.length <= 1 || (current.length === 2 && current.startsWith('-'))) {
@@ -36,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
   }
 
-  // Append a number or decimal to current input (prevent multiple decimals)
   function appendNumber(num) {
     if (error) return;
     if (num === '.') {
@@ -49,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
   }
 
-  // Convert current to percent (divide by 100)
   function applyPercent() {
     if (error) return;
     const value = parseFloat(current);
@@ -57,11 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
   }
 
-  // When the user chooses an operator
   function chooseOperator(op) {
     if (error) return;
 
-    // If there's an existing operator and a previous value, compute first
     if (operator && previous !== '') {
       const result = compute(previous, current, operator);
       if (result === null) return setError('Cannot divide by 0');
@@ -72,14 +62,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Move current to previous and set operator
     operator = op;
     previous = current;
     current = '0';
     updateDisplay();
   }
 
-  // Compute a op b (strings)
   function compute(aStr, bStr, op) {
     const a = parseFloat(aStr);
     const b = parseFloat(bStr);
@@ -94,16 +82,13 @@ document.addEventListener('DOMContentLoaded', () => {
         break;
       default: return b;
     }
-    // Limit to reasonable precision
     return roundAccurately(res, 12);
   }
 
-  // Round to avoid weird floating point results
   function roundAccurately(number, places) {
     return parseFloat(Number(number).toFixed(places));
   }
 
-  // Show an error message and lock the calculator until AC
   function setError(message) {
     current = message;
     previous = '';
@@ -112,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
   }
 
-  // Evaluate the expression (previous operator current)
   function evaluate() {
     if (error) return;
     if (!operator || previous === '') return;
@@ -124,7 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
   }
 
-  // Keyboard support
   function handleKey(e) {
     const key = e.key;
     if ((/^[0-9]$/).test(key)) appendNumber(key);
@@ -139,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (key === '/') chooseOperator('÷');
   }
 
-  // Hook up button events
   document.querySelectorAll('.btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (btn.dataset.num !== undefined) appendNumber(btn.dataset.num);
@@ -151,9 +133,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // global keyboard listener
   window.addEventListener('keydown', handleKey);
 
-  // Initialize
   allClear();
 });
+
