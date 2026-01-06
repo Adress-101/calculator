@@ -1,0 +1,96 @@
+/* Modern glassmorphism calculator styles */
+:root{
+  --bg1: #e0eafc;
+  --bg2: #cfdef3;
+  --glass: rgba(255,255,255,0.18);
+  --glass-2: rgba(255,255,255,0.06);
+  --primary: #6c63ff;
+  --accent: #7ee7c8;
+  --text: #0f1724;
+  --muted: rgba(15,23,36,0.6);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(135deg,var(--bg1),var(--bg2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:2rem;
+  color:var(--text);
+}
+
+.page{width:100%;max-width:420px}
+
+.calculator{
+  border-radius:18px;
+  padding:1.6rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.12));
+  box-shadow: 0 10px 30px rgba(13,30,59,0.12), inset 0 -1px 0 rgba(255,255,255,0.3);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+}
+
+.screen{
+  min-height:88px;
+  border-radius:12px;
+  padding:1rem;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  justify-content:center;
+  color:var(--text);
+  margin-bottom:1rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.04));
+  box-shadow: 0 6px 14px rgba(11,27,52,0.06), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+.previous{color:var(--muted); font-size:0.95rem; margin-bottom:6px; opacity:0.9}
+.current{font-size:1.7rem; font-weight:600; word-break:break-all}
+
+.keys{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:0.8rem;
+}
+
+.btn{
+  border:0;
+  background:rgba(255,255,255,0.08);
+  color:var(--text);
+  padding:0.9rem 0.6rem;
+  font-size:1.05rem;
+  border-radius:12px;
+  cursor:pointer;
+  transition: transform 160ms cubic-bezier(.2,.9,.3,1), box-shadow 160ms ease, background 160ms ease;
+  box-shadow: 0 6px 10px rgba(12,26,45,0.06);
+}
+
+.btn:hover{ transform: translateY(-4px); box-shadow: 0 14px 24px rgba(12,26,45,0.08)}
+.btn:active{ transform: translateY(-1px) scale(0.995)}
+
+.btn.func{ background: rgba(255,255,255,0.06); color:var(--muted); }
+.btn.op{ background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); color:var(--primary); font-weight:600}
+
+.equal{
+  grid-column: 3/ 5;
+  background: linear-gradient(120deg, var(--primary), #9d8cff);
+  color:white; font-weight:700; box-shadow: 0 10px 30px rgba(108,99,255,0.22);
+}
+
+.zero{ grid-column: 1/ 3; text-align:right; padding-left:1.2rem }
+
+.hint{ font-size:0.85rem; color:var(--muted); margin-top:0.9rem; text-align:center }
+
+/* Responsive tweaks */
+@media (max-width:380px){
+  .screen{min-height:78px}
+  .current{font-size:1.4rem}
+  .btn{font-size:1rem;padding:0.8rem}
+}
+
+/* subtle focus styles for accessibility */
+.btn:focus{ outline:2px solid rgba(108,99,255,0.14); outline-offset:3px }
